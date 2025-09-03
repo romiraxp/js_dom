@@ -1,3 +1,14 @@
 body {
     color: #999;
 }
+
+/*.table-bordered {
+    border: solid,2px,black;
+}*/
+.cells {
+    border: solid,1px,#999;    
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    vertical-align: middle;
+}
