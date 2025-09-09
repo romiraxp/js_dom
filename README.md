@@ -1,5 +1,7 @@
 [![Netology AHJ](https://github.com/romiraxp/js_dom/actions/workflows/web.yml/badge.svg?branch=main)](https://github.com/romiraxp/js_dom/actions/workflows/web.yml)
 
+https://romiraxp.github.io/js_dom/
+
 # Домашнее задание к занятию "2. DOM"
 
 Правила сдачи задания:

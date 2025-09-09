@@ -2,13 +2,13 @@ body {
     color: #999;
 }
 
-/*.table-bordered {
-    border: solid,2px,black;
-}*/
 .cells {
+    padding: 1px 1px;
+    margin: 1px 1px;
+    display: inline flex;
     border: solid,1px,#999;    
     width: 70px;
     height: 70px;
-    text-align: center;
+    float: none;
     vertical-align: middle;
 }

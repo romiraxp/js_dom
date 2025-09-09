@@ -1,23 +1,53 @@
-// TODO: write code here
-
-//import { getRandomArbitrary } from "./firstshow";
-//import getRandomArbitrary from "./firstshow";
+import gameFieldCleaning from "./tableremoval"; // импорт функции очистки игрового поля
+import gameFieldCreation from "./tablecreation"; // импорт функции создания игрового поля
+import getRandomValue from "./randomfunc"; // импорт функции генератора случайных чисел
 import goblin_small from "../../pic/goblin_small.png"; // для того, чтобы изображение отображалосьб после сборки webpack, импортируем его
 
 document.addEventListener("DOMContentLoaded", () => {
-  // функция получения случайного значения
-  function getRandomValue(min, max) {
-    return Math.round(Math.random() * (max - min) + min, 0);
-  }
+  const btn = document.querySelector(".btn");
+  btn.addEventListener("click", () => {
+    const rowVal = document.querySelector("#number1").value; //получаем значение из поля ввода кол-ва строк
+    const colVal = document.querySelector("#number2").value; //получаем значение из поля ввода кол-ва столбцов
+    gameFieldCleaning(); // вызываем фунцию очистки игрового поля
+    gameFieldCreation(rowVal, colVal); // вызываем фунцию, в которую передаем размерность нашего игрового поля
 
-  const showInterval = setInterval(() => {
-    let randomValue = getRandomValue(0, 15); //получаем случайное значение id от 0 до 15, которыми являются ячейки таблицы
-    //document.getElementById(randomValue).innerHTML ='<img src="../pic/goblin_small.png">';
-    document.getElementById(randomValue).innerHTML =
-      `<img src=${goblin_small}>`; // к полученному id тега td приписываем путь к картинке гоблина
-    // остановить процесс показа гоблина случайным порядком по истечении 10 сек
-    setTimeout(() => {
-      clearInterval(showInterval);
-    }, 10000);
-  }, 1000);
+    let randomValue = 0; // задаем изначальное значение номера ячейки как первый индекс массива, с коорым затем будем сравнивать новое сгенерированное значение
+    //const showInterval = setInterval(() => {
+    setInterval(() => {
+      const img = document.createElement("img"); // создаем элемент image - наш гоблин
+      const numCol = document.querySelectorAll(".cells"); // находим все элементы div- ячейки
+
+      //в переменную sizeField помещаем размер массива - 1 элемент, тк. индексация с 0.
+      // Мы его юудем использовать для генерации случайного значения- ячейки
+      const sizeField = numCol.length - 1;
+
+      img.src = `${goblin_small}`; //добавляем аттрибут в виде пути импортированного значения
+
+      let randomValue_new = getRandomValue(0, sizeField); //получаем случайное значение id от 0 до размерности поля, которыми являются ячейки таблицы
+
+      const imgToRemove = document.querySelector("img"); //т.к. по сути у нас всегда будет 1 гоблин, то помещаем в переменную для удаления первый найденный
+
+      // если изображение найдено, то удалем его сначала
+      if (imgToRemove) {
+        imgToRemove.remove();
+      }
+
+      // для того, чтобы гоблин "не падал" в ту же самую ячейку, сравниваем наше новое случайное значение с прошлым и,
+      // если они разные, то добавляем гоблина в соотвтесвующую ячейку- div
+      if (randomValue != randomValue_new) {
+        randomValue = randomValue_new;
+        numCol[randomValue].appendChild(img);
+      } else if ((randomValue = sizeField)) {
+        randomValue = randomValue - 1;
+        numCol[randomValue].appendChild(img);
+      } else {
+        randomValue++;
+        numCol[randomValue].appendChild(img);
+      }
+      // остановить процесс показа гоблина случайным порядком по истечении 10 сек
+      /*setTimeout(() => {
+        clearInterval(showInterval);
+    }, 3000);*/
+    }, 1000);
+  });
 });
